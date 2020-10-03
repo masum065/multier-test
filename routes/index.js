@@ -22,12 +22,13 @@ const client = new MongoClient(uri, {
 });
 client.connect((err) => {
   const eventCollections = client.db('events').collection('programs');
-  const url = req.protocol + '://' + req.get('host');
+
   router.post('/upload', upload.single('file'), async function (
     req,
     res,
     next
   ) {
+    const url = req.protocol + '://' + req.get('host');
     const {
       file,
       body: { name, date },
