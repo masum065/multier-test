@@ -31,24 +31,19 @@ client.connect((err) => {
     const url = req.protocol + '://' + req.get('host');
     const {
       file,
-      body: { name, date },
+      body: { title, date, description },
     } = req;
-    const fileName = name + file.detectedFileExtension;
+    const fileName = Date.now() * 110000;
     await pipeline(
       file.stream,
       fs.createWriteStream(`${__dirname}/../public/images/${fileName}`)
     );
     res.send(req.file);
-    console.log(fileName);
-    console.log({
-      url: `${__dirname}/images/${fileName}`,
-      name: name,
-    });
 
     const eventData = {
       url: url + '/images/' + fileName,
-      name: name,
-      date: date,
+      title,
+      description,
     };
 
     eventCollections.insertOne(eventData).then((result) => {
