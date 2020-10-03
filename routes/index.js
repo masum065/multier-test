@@ -46,7 +46,7 @@ client.connect((err) => {
     });
 
     const eventData = {
-      url: url + '/public/' + '/images/' + fileName,
+      url: url + '/public/' + 'images/' + fileName,
       name: name,
       date: date,
     };
