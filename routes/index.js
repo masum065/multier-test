@@ -22,7 +22,7 @@ const client = new MongoClient(uri, {
 });
 client.connect((err) => {
   const eventCollections = client.db('events').collection('programs');
-
+  const url = req.protocol + '://' + req.get('host');
   router.post('/upload', upload.single('file'), async function (
     req,
     res,
@@ -45,7 +45,7 @@ client.connect((err) => {
     });
 
     const eventData = {
-      url: `${__dirname}/images/${fileName}`,
+      url: url + '/public/' + '/images/' + fileName,
       name: name,
       date: date,
     };
