@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
     title: 'Express',
   });
 });
+
 const upload = multer();
 const MongoClient = require('mongodb').MongoClient;
 const uri =
@@ -20,6 +21,7 @@ const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
 client.connect((err) => {
   const eventCollections = client.db('events').collection('programs');
 
@@ -33,7 +35,7 @@ client.connect((err) => {
       file,
       body: { title, date, description },
     } = req;
-    const fileName = Date.now() * 110000;
+    const fileName = Date.now() * 110000 + file.detectedFileExtension;
     await pipeline(
       file.stream,
       fs.createWriteStream(`${__dirname}/../public/images/${fileName}`)
@@ -44,12 +46,28 @@ client.connect((err) => {
       url: url + '/images/' + fileName,
       title,
       description,
+      date,
     };
 
     eventCollections.insertOne(eventData).then((result) => {
       res.send(result.insertedCount > 0);
     });
   });
+
+
+// show/ Update Operation
+router.get('/events', (req, res) => {
+  eventCollections.find({}).toArray((err, docs) => {
+    res.send(docs);
+  });
+
+
+
+
+
+
+
+
 });
 
 router.get('/images', (req, res) => {
