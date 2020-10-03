@@ -16,14 +16,14 @@ router.get('/', function (req, res, next) {
 const upload = multer();
 const MongoClient = require('mongodb').MongoClient;
 const uri =
-  'mongodb+srv://rider:XBy6BoY1A6WyHZ8e@cluster1.fwfle.mongodb.net/events?retryWrites=true&w=majority';
+  'mongodb+srv://rider:XBy6BoY1A6WyHZ8e@cluster1.fwfle.mongodb.net/eventsDB?retryWrites=true&w=majority';
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 client.connect((err) => {
-  const eventCollections = client.db('events').collection('programs');
+  const eventCollections = client.db('eventsDB').collection('programs');
 
   router.post('/upload', upload.single('file'), async function (
     req,
@@ -43,7 +43,7 @@ client.connect((err) => {
     res.send(req.file);
 
     const eventData = {
-      url: url + '/images/' + fileName,
+      imageBanner: url + '/images/' + fileName,
       title,
       description,
       date,
