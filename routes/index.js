@@ -54,20 +54,12 @@ client.connect((err) => {
     });
   });
 
-
-// show/ Update Operation
-router.get('/events', (req, res) => {
-  eventCollections.find({}).toArray((err, docs) => {
-    res.send(docs);
+  // show/ Update Operation
+  router.get('/events', (req, res) => {
+    eventCollections.find({}).toArray((errr, docs) => {
+      res.send(docs);
+    });
   });
-
-
-
-
-
-
-
-
 });
 
 router.get('/images', (req, res) => {
