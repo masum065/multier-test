@@ -46,7 +46,7 @@ client.connect((err) => {
     res.send(req.file);
 
     const eventData = {
-      imageBanner: url + '/images/' + fileName,
+      imageBanner: '/images/' + fileName,
       title,
       description,
       date,
